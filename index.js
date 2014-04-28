@@ -8,12 +8,17 @@ var through = require('through2');
 module.exports = cacheStream;
 
 function cacheStream(path) {
-  mkdirp(dirname(path));
-  var stream = fs.createWriteStream(path);
-  var end = stream.end.bind(stream);
+  var stream;
   return through.obj(function transform(chunk, enc, callback){
+    if (!stream) {
+      mkdirp(dirname(path));
+      stream = fs.createWriteStream(path);
+    }
+
     stream.write(chunk);
     this.push(chunk);
     callback();
-  }, end);
+  }, function() {
+    stream && stream.end.apply(stream, arguments);
+  });
 }

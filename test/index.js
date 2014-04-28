@@ -7,15 +7,18 @@ var through = require('through2');
 
 describe('fscache-stream', function() {
 
-  it('Normal use', function(done) {
+  var outputPath = __dirname + '/fixtures/output';
+  beforeEach(function() {
+    fs.existsSync(outputPath) && fs.unlinkSync(outputPath);
+  });
+
+  it('should cache file', function(done) {
     var result = '', expected = 'test string\n';
     var mock = through();
     mock.write('test ');
     mock.write('string');
     mock.end('\n');
 
-    var outputPath = __dirname + '/fixtures/output';
-    fs.existsSync(outputPath) && fs.unlinkSync(outputPath);
     mock
       .pipe(fscache(outputPath))
       .on('data', function(data) {
@@ -29,4 +32,8 @@ describe('fscache-stream', function() {
       });
   });
 
+  it('should not create file when no data pass', function() {
+    fscache(outputPath);
+    fs.existsSync(outputPath).should.not.be.true;
+  });
 });
