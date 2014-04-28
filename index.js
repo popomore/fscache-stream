@@ -18,7 +18,7 @@ function cacheStream(path) {
     stream.write(chunk);
     this.push(chunk);
     callback();
-  }, function() {
-    stream && stream.end.apply(stream, arguments);
+  }, function(callback) {
+    stream ? stream.end(callback) : callback();
   });
 }

@@ -32,8 +32,18 @@ describe('fscache-stream', function() {
       });
   });
 
-  it('should not create file when no data pass', function() {
-    fscache(outputPath);
-    fs.existsSync(outputPath).should.not.be.true;
+  it('should not create file when no data pass', function(done) {
+    var count = 0;
+    var mock = through();
+    mock.end();
+
+    mock
+    .pipe(fscache(outputPath))
+    .on('data', function() {count++;})
+    .on('end', function() {
+      count.should.eql(0);
+      fs.existsSync(outputPath).should.not.be.true;
+      done();
+    });
   });
 });
