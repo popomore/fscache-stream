@@ -1,0 +1,26 @@
+{
+  "name": "fscache-stream",
+  "version": "0.1.0",
+  "description": "a passtrough stream caching buffer to file system",
+  "main": "index",
+  "dependencies": {
+    "mkdirp": "~0.4.0",
+    "through2": "~0.4.1"
+  },
+  "devDependencies": {
+    "coveralls": "~2.10.0",
+    "istanbul": "~0.2.7",
+    "mocha": "~1.18.2",
+    "should": "3.3.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/popomore/fscache-stream"
+  },
+  "homepage": "https://github.com/popomore/fscache-stream",
+  "author": "popomore <sakura9515@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "test": "make test"
+  }
+}
